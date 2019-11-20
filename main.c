@@ -1,35 +1,34 @@
-/******************************************************************************
 
-                            Online C Compiler.
-                Code, Compile, Run and Debug C program online.
-Write your code in this editor and press "Run" button to compile and execute it.
-
-*******************************************************************************/
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-
+#define MAX_LIMIT 100
 int main()
 {
-	char str[] = "accountant>> insert 8 13 16";
-	int init_size = strlen(str);
+	 //accountant>> insert 8 13 1
+	char str[MAX_LIMIT];
+	fgets(str, MAX_LIMIT, stdin);
+	printf("%s", str);
+	char* str2 = (char*)malloc(sizeof(char) * MAX_LIMIT);
+	strcpy(str2, str);
 	char delim[] = " ";
-    int  number[10],i=0,size=0;
-	char *ptr = strtok(str, delim);
+	int  number[10], i = 0, size = 0;
+	char* ptr = strtok(str2, delim);
 
-	while(ptr != NULL)
+	while (ptr != NULL)
 	{
 		printf("%s\n", ptr);
-		if(size>=3){
-		    number[i]=atoi(ptr);
-		    i++;
+		if (size >= 2) {
+			number[i] = atoi(ptr);
+			i++;
 		}
 		size++;
 		ptr = strtok(NULL, delim);
 	}
 
-    for(int k=0 ;k < i ; k++){
-         printf(" ===> %d \n ",number[k]);   
-    }
+	for (int k = 0; k < i; k++) {
+		printf(" ===> %d \n ", number[k]);
+	}
 
 	return 0;
 }
