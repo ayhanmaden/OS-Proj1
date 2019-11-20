@@ -10,7 +10,7 @@ Write your code in this editor and press "Run" button to compile and execute it.
 
 int main()
 {
-	char str[] = "acount >> compile 5 2 45 6";
+	char str[] = "accountant>> insert 8 13 16";
 	int init_size = strlen(str);
 	char delim[] = " ";
     int  number[10],i=0,size=0;
