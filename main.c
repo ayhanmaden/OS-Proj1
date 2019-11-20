@@ -1,11 +1,12 @@
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #define MAX_LIMIT 100
 int main()
 {
-	 //accountant>> insert 8 13 1
+	// insert , calculate , readall , clear , exit 
 	char str[MAX_LIMIT];
 	fgets(str, MAX_LIMIT, stdin);
 	printf("%s", str);
