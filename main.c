@@ -4,16 +4,24 @@
 #define  MAX_LIMIT 100
 char* str3[MAX_LIMIT];
 void inputword(char* input);// get word from user input;;
+void instermathod(int p[]);
 void main() {
 	// insert , calculate , readall , clear , exit
-	char str[MAX_LIMIT]; // limit input 
+	char str[MAX_LIMIT]; // limit input
 	while (1)
 	{
 		printf("\naccountant>>");
 		fgets(str, MAX_LIMIT, stdin); // input from user 
 		inputword(str);// full array 
 		if ((strcmp(str3[0], "insert")) == 0) {
-			printf("insert cmd ");
+			int pozitif[100];
+			for (int i = 1,k=0; i <100; i++,k++)// negative numbers contorl
+			{
+				if (str3[i] != NULL && 0<atoi(str3[i]))  {
+					pozitif[k] = atoi(str3[i]);
+				}
+			}
+			instermathod(pozitif);
 		}
 		else if ((strcmp(str3[0], "calculate")) == 0) {
 			printf("calculate cmd ");
@@ -47,4 +55,13 @@ void inputword(char* input)
 		ptr = strtok(NULL, delim);
 	}
 	
+}
+
+void instermathod(int p[])
+{
+	for (int i = 0; i < 3; i++)
+	{
+		printf("%d amk  ",p[i]);
+
+	}
 }
