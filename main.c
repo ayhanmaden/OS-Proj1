@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define MAX_LIMIT 100
-char *str3[MAX_LIMIT], *pozitif[100];
+char *str3[MAX_LIMIT], *pozitif[100], *calc[4];
 void inputword(char *input); // get word from user input;;
 void mathods(int i);
 void main(int argc, char **argv, char **envp)
@@ -40,15 +40,24 @@ void main(int argc, char **argv, char **envp)
 			{
 
 				printf(" -r ");
+				calc[0] = str3[1];
+				calc[1] = str3[2];
+				calc[2] = str3[3];
+				calc[3] = pozitif[0];
 			}
 			else if ((strcmp(str3[1], "-s") == 0))
 			{
 				printf(" -s ");
+				calc[0] = str3[1]; // 	-s
+				calc[1] = str3[2]; // ilk sayi
+				calc[2] = str3[3]; // ikinci sayi
+				calc[3] = pozitif[0];// size
 			}
 			else
 			{
 				printf("error");
 			}
+			mathods(2);
 		}
 		else if ((strcmp(str3[0], "readall\n")) == 0)
 		{
@@ -56,7 +65,7 @@ void main(int argc, char **argv, char **envp)
 		}
 		else if ((strcmp(str3[0], "clear\n")) == 0)
 		{
-			system("cls");
+			system("clear");
 		}
 		else if ((strcmp(str3[0], "exit\n")) == 0)
 		{
@@ -94,6 +103,10 @@ void mathods(int flg)
 		if (flg == 1)
 		{
 			id = execv("insert", pozitif);
+		}
+		else if (flg == 2)
+		{
+			id = execv("calculate", calc);
 		}
 	}
 	else
