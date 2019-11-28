@@ -19,9 +19,9 @@ void main(int argc, char **argv, char **envp)
 		fgets(str, MAX_LIMIT, stdin); // input from user
 		inputword(str);				  // full array
 		if ((strcmp(str3[0], "insert")) == 0)
-		{
-			char k = 1;
-			for (int i = 1; i < 100; i++) // negative numbers contorl
+		{	
+			int k = 1;
+            for (int i = 1; i < 100; i++) // negative numbers contorl
 			{
 				if (str3[i] != NULL)
 				{
@@ -29,29 +29,30 @@ void main(int argc, char **argv, char **envp)
 					k++;
 				}
 			}
+			for(int d =0;d<100;d++ ){
+               str3[d]=NULL;
+			}
 			char snum[2];
 			sprintf(snum, "%d", k);
 			pozitif[0] = snum;
 			mathods(1);
+			
 		}
 		else if ((strcmp(str3[0], "calculate")) == 0)
 		{
 			if ((strcmp(str3[1], "-r") == 0))
 			{
 
-				printf(" -r ");
 				calc[0] = str3[1];
 				calc[1] = str3[2];
 				calc[2] = str3[3];
-				calc[3] = pozitif[0];
+			
 			}
 			else if ((strcmp(str3[1], "-s") == 0))
 			{
-				printf(" -s ");
-				calc[0] = str3[1]; // 	-s
-				calc[1] = str3[2]; // ilk sayi
-				calc[2] = str3[3]; // ikinci sayi
-				calc[3] = pozitif[0];// size
+				calc[0] = str3[1];	// 	-s
+				calc[1] = str3[2];	// ilk sayi
+				calc[2] = str3[3];	// ikinci sayi
 			}
 			else
 			{
