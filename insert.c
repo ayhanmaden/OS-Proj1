@@ -8,11 +8,24 @@ int main(int argc, char *argv[])
 {
 	int i; 
     //open file sample.txt in write mode 
-    FILE *fptr = fopen("database", "w"); 
-    for (i=1; i<atoi(argv[0]); i++) 
+    //FILE *fptr = fopen("database", "w"); //dosya olusturmak
+	printf("size amk %d \n",atoi(argv[0]));
+    for (i=1; i<atoi(argv[0]); i++)//dizini 0 elemneni dizini bouytu demek   
     { 
-        fprintf(fptr,"%d\n",atoi(argv[i])); 
+        printf("%d\n",atoi(argv[i])); // dosya yazdiriyor
     } 
-    fclose(fptr); 
+    //fclose(fptr); 
+
+   FILE *out = fopen("database", "a");  
+   if (out==NULL) {
+       FILE *fptr = fopen("database", "w"); //dosya olusturmak
+   }
+  for (i=1; i<atoi(argv[0]); i++)//dizini 0 elemneni dizini bouytu demek   
+    { 
+        fprintf(out,"%d\n",atoi(argv[i])); // dosya yazdiriyor
+    }
+
+    fclose(out);  
+  
 	return 0;
 }
