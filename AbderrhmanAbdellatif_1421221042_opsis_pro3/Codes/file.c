@@ -5,7 +5,7 @@
 int main()
 {
     FILE *fptr1, *fptr2;
-    int size=0,i,sayilar[20];;
+    int size=0,i=0;
     char str[MAX];
     char newln[MAX], temp[] = "temp.txt";
     static const char fname[] = "test.txt";
@@ -15,6 +15,7 @@ int main()
     if (0 == size)
     {
       printf("file is empty\n");
+      printf("lines file is : 0. \n");
     }
     else
     {
@@ -23,6 +24,38 @@ int main()
         printf("Unable to open the input file!!\n");
         return 0;
     }
+    // size of line
+    FILE *myFile;
+    myFile = fopen("test.txt", "r");
+    int lines = 0;
+    char ch = 0;
+
+    while (!feof(myFile))
+    {
+        ch = fgetc(myFile);
+        if (ch == '\n')
+        {
+            lines++;
+        }
+    }
+    printf("lines file %d\n", lines);
+    int numberArray[lines];
+    int i=0;
+    char *numbers;
+    static const char filename[] = "test.txt";
+    FILE *file = fopen(filename, "r");
+    if (file != NULL)
+    {
+        char line[3];                                   /* or other suitable maximum line size */
+        while (fgets(line, sizeof(line), file) != NULL) /* read a line */
+        {
+            fputs(line,file);
+            numberArray[i]=atoi(line); /* write to array  */
+            i++;
+        }
+        fclose(file);
+    }
+
     fptr2 = fopen(temp, "w");
     if (!fptr2)
     {
@@ -34,20 +67,15 @@ int main()
     strcpy(newln, "");
     /* get the line number to delete the specific line */
     // copy all contents to the temporary file other except specific line
+
+
     while (!feof(fptr1))
     {
         strcpy(str, "\0");
         fgets(str, MAX, fptr1);
-        if (!feof(fptr1))
-        {   
-            fscanf(fptr1, "%d", &no);
-            sayilar[i] = atoi(no); //gelen  file deki  degeri okuyorum  ve arrayya atiyorum
-            i++;
-            fprintf(fptr2, "%s", newln);
-        }
     }
-    for(int j=0;i<i;j++){
-      printf("%d\n",i);
+    for(int j=0;j<lines;j++){
+      printf(" %d \n",numberArray[j]);
     }
     fclose(fptr1);
     fclose(fptr2);
