@@ -135,17 +135,16 @@ int main()
             }
             else if (forkdurum > 0)
             {
-
-                if (write(pipe_p[1], numberArray, sizeof(numberArray)) < 0) // write in pipe
+                 close(pipe_p[0]);
+                for (int i = 0; i < lines; i++)
                 {
-                    printf("cant write in to pipe  ");
+                    if (write(pipe_p[1], numberArray, sizeof(numberArray)) < 0) // write in pipe
+                    {
+                        printf("cant write in to pipe  ");
+                    }
+                    printf("write %d\n", numberArray[i][0]);
                 }
-                printf("write %d\n", numberArray[0][0]);
-                for (int j = 0; j < lines; j++)
-                {
-                    printf(" gonderiyor %d \n", numberArray[j][4]);
-                }
-
+                
                 wait(&c);
             }
         }
