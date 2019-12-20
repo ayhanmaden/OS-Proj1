@@ -42,7 +42,6 @@ int main()
     int i, line;
     char s[1000];
     int c;
-    int numberArray[10];
 
     if (pipe(pipefd) < 0)
     {
@@ -69,20 +68,19 @@ int main()
     {
 
         wait(&c);
+        int numberArray_ilk[100];
+        read(pipefd[0], numberArray_ilk, sizeof(numberArray_ilk));
         printf("reading from pipe ...\n");
-        read(pipefd[0], numberArray, sizeof(numberArray));
-        printf("%d==>[0]",numberArray[0]);
-    if(numberArray[0]!=-9){
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i <(numberArray_ilk[0]+1); i++)
         {
-            printf("read from pipe => %d\n", numberArray[i]);
+            printf("read from pipe => %d\n", numberArray_ilk[i]);
         }
     };
         
         
     }
     sleep(10);
-    }
+    
     return 0;
 }
 

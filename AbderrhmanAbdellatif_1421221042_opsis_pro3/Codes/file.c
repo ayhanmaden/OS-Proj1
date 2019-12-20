@@ -53,74 +53,74 @@ int main(int argc, char *argv[])
     }
     pipe_p[0] = strtoint(argv[0]);
     pipe_p[1] = strtoint(argv[1]);
-       fptr1 = fopen(fname, "r");
-        fseek(fptr1, 0, SEEK_END);
-        size = ftell(fptr1); // if file is empty or not
-        if (0 == size)
+    fptr1 = fopen(fname, "r");
+    fseek(fptr1, 0, SEEK_END);
+    size = ftell(fptr1); // if file is empty or not
+    if (0 == size)
+    {
+        printf("file is empty\n");
+        printf("lines file is : 0. \n");
+        int i[10];
+        i[0] = -9;
+        write(pipe_p[1], &i[0], sizeof(int));
+        sleep(5);
+    }
+    else
+    {
+        // size of line
+        FILE *myFile;
+        myFile = fopen("test.txt", "r");
+        int lines = 0;
+        char ch = 0;
+        while (!feof(myFile))
         {
-            printf("file is empty\n");
-            printf("lines file is : 0. \n");
-            int i[10];
-            i[0]=-9;
-            write(pipe_p[1],i, sizeof(i));
-            sleep(5);
+            ch = fgetc(myFile);
+            if (ch == '\n')
+            {
+                lines++;
+            }
         }
-        else
+        int numberArray[lines + 1]; // array
+        int i = 1;
+        static const char filename[] = "test.txt";
+        FILE *file = fopen(filename, "r");
+        if (file != NULL)
         {
-            // size of line
-            FILE *myFile;
-            myFile = fopen("test.txt", "r");
-            int lines = 0;
-            char ch = 0;
-            while (!feof(myFile))
+            char line[7];                                   /* or other suitable maximum line size */
+            while (fgets(line, sizeof(line), file) != NULL) /* read a line */
             {
-                ch = fgetc(myFile);
-                if (ch == '\n')
-                {
-                    lines++;
-                }
+                fputs(line, file);
+                numberArray[i] = atoi(line); /* write to array  */
+                i++;
             }
-            printf("lines file %d\n", lines);
-            int numberArray[lines]; // array
-            int i = 0;
-            static const char filename[] = "test.txt";
-            FILE *file = fopen(filename, "r");
-            if (file != NULL)
-            {
-                char line[7];                                   /* or other suitable maximum line size */
-                while (fgets(line, sizeof(line), file) != NULL) /* read a line */
-                {
-                    fputs(line, file);
-                    numberArray[i] = atoi(line); /* write to array  */
-                    i++;
-                }
-                fclose(file);
-            }
-            fptr2 = fopen(temp, "w");
-            strcpy(newln, "");
-            while (!feof(fptr1))
-            {
-                strcpy(str, "\0");
-                fgets(str, MAX, fptr1);
-            }
+            fclose(file);
+        }
+        fptr2 = fopen(temp, "w");
+        strcpy(newln, "");
+        while (!feof(fptr1))
+        {
+            strcpy(str, "\0");
+            fgets(str, MAX, fptr1);
+        }
 
-            fclose(fptr1);
-            fclose(fptr2);
-            remove(fname);
-            rename(temp, fname);
-            printf("successfully..!! \n");
-            close(pipe_p[0]);
-
-            for (int i = 0; i < lines; i++)
+        fclose(fptr1);
+        fclose(fptr2);
+        remove(fname);
+        rename(temp, fname);
+        printf("successfully..!! \n");
+        close(pipe_p[0]);
+        numberArray[0] = lines + 1;
+        for (int i = 0; i < lines + 2; i++)
+        {
+            if (write(pipe_p[1], &numberArray[i], sizeof(int)) < 0) // write in pipe
             {
-                if (write(pipe_p[1], numberArray, sizeof(numberArray)) < 0) // write in pipe
-                {
-                    printf("cant write in to pipe  ");
-                }
-                printf("write %d\n", numberArray[i]);
-                sleep(2);
+                printf("cant write in to pipe  ");
             }
-        
+            if(i!=0){
+            printf("write %d\n", numberArray[i]);
+            }
+            sleep(2);
+        }
     }
     return 0;
 }
