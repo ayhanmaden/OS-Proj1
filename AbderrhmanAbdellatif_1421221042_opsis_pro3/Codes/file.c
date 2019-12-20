@@ -59,7 +59,6 @@ int main(int argc, char *argv[])
     if (0 == size)
     {
         printf("file is empty\n");
-        printf("lines file is : 0. \n");
         int i[10];
         i[0] = -9;
         write(pipe_p[1], &i[0], sizeof(int));
@@ -114,10 +113,11 @@ int main(int argc, char *argv[])
         {
             if (write(pipe_p[1], &numberArray[i], sizeof(int)) < 0) // write in pipe
             {
-                printf("cant write in to pipe  ");
+                printf
+                ("cant write in to pipe  ");
             }
             if(i!=0){
-            printf("write %d\n", numberArray[i]);
+            printf("write in pipe %d\n", numberArray[i]);
             }
             sleep(2);
         }
