@@ -53,16 +53,16 @@ int main(int argc, char *argv[])
     }
     pipe_p[0] = strtoint(argv[0]);
     pipe_p[1] = strtoint(argv[1]);
-
-    while (1)
-    {
-        fptr1 = fopen(fname, "r");
+       fptr1 = fopen(fname, "r");
         fseek(fptr1, 0, SEEK_END);
         size = ftell(fptr1); // if file is empty or not
         if (0 == size)
         {
             printf("file is empty\n");
             printf("lines file is : 0. \n");
+            int i[10];
+            i[0]=-9;
+            write(pipe_p[1],i, sizeof(i));
             sleep(5);
         }
         else
@@ -120,9 +120,7 @@ int main(int argc, char *argv[])
                 printf("write %d\n", numberArray[i]);
                 sleep(2);
             }
-            exit(0);
-        sleep(5);
-        }
+        
     }
     return 0;
 }

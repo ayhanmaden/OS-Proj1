@@ -49,10 +49,13 @@ int main()
         perror("pipe");
         exit(1);
     }
+     while(1){
     char *newargv[2];
     newargv[0] = convert(pipefd[0]);
     newargv[1] = convert(pipefd[1]);
     newargv[2] = NULL;
+
+   
     pid = fork();
 
     if (pid == 0)
@@ -68,11 +71,17 @@ int main()
         wait(&c);
         printf("reading from pipe ...\n");
         read(pipefd[0], numberArray, sizeof(numberArray));
+        printf("%d==>[0]",numberArray[0]);
+    if(numberArray[0]!=-9){
         for (int i = 0; i < 10; i++)
         {
             printf("read from pipe => %d\n", numberArray[i]);
         }
+    };
         
+        
+    }
+    sleep(10);
     }
     return 0;
 }
