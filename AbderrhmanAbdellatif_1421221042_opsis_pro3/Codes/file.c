@@ -12,47 +12,24 @@
 #include <sys/wait.h>
 #include <string.h>
 #define MAX 256
-int strtoint(char *charnums)
-{
-    int number = 0;
-    int index = 0;
-    while (charnums[index])
-    {
-        if (('0' <= charnums[index]) && (charnums[index] <= '9'))
-        {
-
-            if (!number)
-                number = ((int)charnums[index]) - 48;
-            else
-            {
-                number = (number *= 10) + ((int)charnums[index] - 48);
-            }
-            index++;
-        }
-        else
-        {
-            number = -1;
-            printf("\nGecersiz islem");
-            break;
-        }
-    }
-    return number;
-}
 int main(int argc, char *argv[])
 {
     FILE *fptr1, *fptr2;
     int size = 0, c = 0, i = 0;
     char str[MAX];
+    // make a file txt
     char newln[MAX], temp[] = "temp.txt";
-    static const char fname[] = "test.txt";
+    static const char fname[] = "data.txt";
     int forkdurum = 0;
     int pipe_p[2];
+    // make a pipe 
     if (pipe(pipe_p) < 0)
     {
         printf("can not create  a pipe");
     }
-    pipe_p[0] = strtoint(argv[0]);
-    pipe_p[1] = strtoint(argv[1]);
+    // to make array of pipe 
+    pipe_p[0] = atoi(argv[0]);
+    pipe_p[1] = atoi(argv[1]);
     fptr1 = fopen(fname, "r");
     fseek(fptr1, 0, SEEK_END);
     size = ftell(fptr1); // if file is empty or not
@@ -67,10 +44,8 @@ int main(int argc, char *argv[])
     {
         // size of line
         FILE *myFile;
-        myFile = fopen("test.txt", "r");
+        myFile = fopen("data.txt", "r");
         int lines = 0;
-        pipe_p[0] = strtoint(argv[0]);
-        pipe_p[1] = strtoint(argv[1]);
         char ch = 0;
         while (!feof(myFile))
         {
@@ -82,7 +57,7 @@ int main(int argc, char *argv[])
         }
         int numberArray[lines + 1]; // array
         int i = 1;
-        static const char filename[] = "test.txt";
+        static const char filename[] = "data.txt";
         FILE *file = fopen(filename, "r");
         if (file != NULL)
         {
@@ -95,6 +70,7 @@ int main(int argc, char *argv[])
             }
             fclose(file);
         }
+        // open file 
         fptr2 = fopen(temp, "w");
         strcpy(newln, "");
         while (!feof(fptr1))
@@ -103,12 +79,12 @@ int main(int argc, char *argv[])
             fgets(str, MAX, fptr1);
         }
 
-        fclose(fptr1);
-        fclose(fptr2);
-        remove(fname);
-        rename(temp, fname);
+        fclose(fptr1);// close file 
+        fclose(fptr2); //close file 
+        remove(fname);// remove files
+        rename(temp, fname);// rename file 
         close(pipe_p[0]);
-        numberArray[0] = lines + 1;
+        numberArray[0] = lines + 1; // first index 
         for (int i = 0; i < lines + 2; i++)
         {
             if (write(pipe_p[1], &numberArray[i], sizeof(int)) < 0) // write in pipe

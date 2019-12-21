@@ -15,7 +15,6 @@
 pthread_mutex_t thread_reader_lock;
 pthread_mutex_t thread_calculater_lock;
 int sum = 0, array_size = 0, number = 0, d = 1, p = 0, m = 0;
-;
 int pipefd[2], num[100], numberArray_ilk[100];
 
 char *convert(int number)
@@ -82,7 +81,7 @@ int main()
     int i, line;
     char s[1000];
     int c;
-
+    //make pipe  
     if (pipe(pipefd) < 0)
     {
         perror("pipe");
@@ -91,24 +90,24 @@ int main()
     while (1)
     {
         char *newargv[2];
-        newargv[0] = convert(pipefd[0]);
-        newargv[1] = convert(pipefd[1]);
+        newargv[0] = convert(pipefd[0]);// pipe[0]
+        newargv[1] = convert(pipefd[1]); //pipe [1]
         newargv[2] = NULL;
 
-        pid = fork();
+        pid = fork(); // fork
 
         if (pid == 0)
         {
 
-            c = execv("reader", newargv);
+            c = execv("reader", newargv);// execv 
             perror("");
-            close(pipefd[1]);
+            close(pipefd[1]);//close pipe 
         }
         else
         {
             wait(&c);
 
-            read(pipefd[0], numberArray_ilk, sizeof(numberArray_ilk));
+            read(pipefd[0], numberArray_ilk, sizeof(numberArray_ilk));// read form pipe 
             for (int i = 1; i < (numberArray_ilk[0] + 1); i++)
             {
                 printf("read from pipe => %d\n", numberArray_ilk[i]);
@@ -116,7 +115,7 @@ int main()
             }
             array_size = numberArray_ilk[0];
         };
-
+         // to make a thread 
         pthread_mutex_init(&thread_reader_lock, NULL);
         pthread_mutex_init(&thread_calculater_lock, NULL);
         pthread_mutex_lock(&thread_calculater_lock);
