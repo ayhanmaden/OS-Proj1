@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
     {
         printf("file is empty\n");
         int i[10];
-        i[0] = -9;
+        i[1] = -9;
         write(pipe_p[1], &i[0], sizeof(int));
         sleep(5);
     }
@@ -70,6 +70,8 @@ int main(int argc, char *argv[])
         FILE *myFile;
         myFile = fopen("test.txt", "r");
         int lines = 0;
+        pipe_p[0] = strtoint(argv[0]);
+        pipe_p[1] = strtoint(argv[1]);
         char ch = 0;
         while (!feof(myFile))
         {
@@ -113,11 +115,11 @@ int main(int argc, char *argv[])
         {
             if (write(pipe_p[1], &numberArray[i], sizeof(int)) < 0) // write in pipe
             {
-                printf
-                ("cant write in to pipe  ");
+                printf("cant write in to pipe  ");
             }
-            if(i!=0){
-            printf("write in pipe %d\n", numberArray[i]);
+            if (i != 0)
+            {
+                printf("write in pipe %d\n", numberArray[i]);
             }
             sleep(2);
         }
