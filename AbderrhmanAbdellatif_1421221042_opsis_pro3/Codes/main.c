@@ -109,7 +109,7 @@ int main()
             wait(&c);
 
             read(pipefd[0], numberArray_ilk, sizeof(numberArray_ilk));
-            for (int i = 0; i < (numberArray_ilk[0] + 1); i++)
+            for (int i = 1; i < (numberArray_ilk[0] + 1); i++)
             {
                 printf("read from pipe => %d\n", numberArray_ilk[i]);
                 sleep(2);

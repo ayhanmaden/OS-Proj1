@@ -58,7 +58,6 @@ int main(int argc, char *argv[])
     size = ftell(fptr1); // if file is empty or not
     if (0 == size)
     {
-        printf("file is empty\n");
         int i[10];
         i[1] = -9;
         write(pipe_p[1], &i[0], sizeof(int));
@@ -108,7 +107,6 @@ int main(int argc, char *argv[])
         fclose(fptr2);
         remove(fname);
         rename(temp, fname);
-        printf("successfully..!! \n");
         close(pipe_p[0]);
         numberArray[0] = lines + 1;
         for (int i = 0; i < lines + 2; i++)
