@@ -55,6 +55,10 @@ void *calculater() //$kareal thread
 {
 
     pthread_mutex_lock(&thread_calculater_lock);
+    if (number<0)
+    {
+        exit(0);
+    }
     sum = sum + pow(number, 2);
     if (p == 0)
     {
